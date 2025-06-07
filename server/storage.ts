@@ -137,7 +137,8 @@ export class MemStorage implements IStorage {
         categoryId: 4,
         images: ["https://images.unsplash.com/photo-1469334031218-e382a71b716b", "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b"],
         stock: 12,
-        featured: true
+        featured: true,
+        topSeller: false
       },
       {
         name: "Kente Clutch Bag",
@@ -146,7 +147,8 @@ export class MemStorage implements IStorage {
         categoryId: 1,
         images: ["https://images.unsplash.com/photo-1594736797933-d0701ba2fe65"],
         stock: 25,
-        featured: false
+        featured: false,
+        topSeller: false
       },
       {
         name: "Aso Oke Gele",
@@ -155,7 +157,8 @@ export class MemStorage implements IStorage {
         categoryId: 2,
         images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96"],
         stock: 18,
-        featured: false
+        featured: false,
+        topSeller: false
       }
     ];
 
@@ -214,7 +217,7 @@ export class MemStorage implements IStorage {
   }
 
   // Products
-  async getProducts(categoryId?: number, featured?: boolean): Promise<Product[]> {
+  async getProducts(categoryId?: number, featured?: boolean, topSeller?: boolean): Promise<Product[]> {
     let products = Array.from(this.products.values());
     
     if (categoryId) {
@@ -225,7 +228,21 @@ export class MemStorage implements IStorage {
       products = products.filter(p => p.featured === featured);
     }
     
+    if (topSeller !== undefined) {
+      products = products.filter(p => p.topSeller === topSeller);
+    }
+    
     return products;
+  }
+
+  async searchProducts(query: string): Promise<Product[]> {
+    const products = Array.from(this.products.values());
+    const searchQuery = query.toLowerCase();
+    
+    return products.filter(product => 
+      product.name.toLowerCase().includes(searchQuery) ||
+      product.description.toLowerCase().includes(searchQuery)
+    );
   }
 
   async getProduct(id: number): Promise<Product | undefined> {
@@ -242,6 +259,7 @@ export class MemStorage implements IStorage {
       images: insertProduct.images,
       stock: insertProduct.stock || 0,
       featured: insertProduct.featured || false,
+      topSeller: insertProduct.topSeller || false,
       createdAt: new Date()
     };
     this.products.set(product.id, product);
@@ -344,6 +362,30 @@ export class MemStorage implements IStorage {
     };
     this.orderItems.set(orderItem.id, orderItem);
     return orderItem;
+  }
+
+  // Wishlist
+  async getWishlistItems(userId: number): Promise<(WishlistItem & { product: Product })[]> {
+    const userWishlistItems = Array.from(this.wishlistItems.values()).filter(item => item.userId === userId);
+    return userWishlistItems.map(item => ({
+      ...item,
+      product: this.products.get(item.productId)!
+    }));
+  }
+
+  async addToWishlist(insertWishlistItem: InsertWishlistItem): Promise<WishlistItem> {
+    const wishlistItem: WishlistItem = {
+      id: this.currentWishlistItemId++,
+      userId: insertWishlistItem.userId,
+      productId: insertWishlistItem.productId,
+      createdAt: new Date()
+    };
+    this.wishlistItems.set(wishlistItem.id, wishlistItem);
+    return wishlistItem;
+  }
+
+  async removeFromWishlist(id: number): Promise<void> {
+    this.wishlistItems.delete(id);
   }
 }
 
