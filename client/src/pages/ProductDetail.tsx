@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, Link } from 'wouter';
-import { ArrowLeft, Heart, Star, Truck, RotateCcw, Shield, Plus, Minus } from 'lucide-react';
+import { ArrowLeft, Heart, Star, Truck, RotateCcw, Shield, Plus, Minus, Eye, Palette, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -29,6 +29,8 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [showAvatarPreview, setShowAvatarPreview] = useState(false);
+  const [selectedColor, setSelectedColor] = useState('#FF6B6B');
 
   const { data: product, isLoading, error } = useQuery<Product>({
     queryKey: ['/api/products', id],
@@ -62,6 +64,8 @@ export default function ProductDetail() {
   const formatPrice = (price: string) => {
     return `₦${parseFloat(price).toLocaleString()}`;
   };
+
+  const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#FF8A80', '#A5D6A7'];
 
   if (isLoading) {
     return (
@@ -118,8 +122,8 @@ export default function ProductDetail() {
           initial="initial"
           animate="animate"
         >
-          <Link href="/products" className="text-abuja-brown/60 hover:text-abuja-brown transition-colors">
-            Products
+          <Link href="/collection" className="text-abuja-brown/60 hover:text-abuja-brown transition-colors">
+            Collection
           </Link>
           <span className="text-abuja-brown/40">/</span>
           <span className="text-abuja-brown font-medium">{product.name}</span>
@@ -132,7 +136,7 @@ export default function ProductDetail() {
             initial="initial"
             animate="animate"
           >
-            <div className="mb-4">
+            <div className="mb-4 relative">
               <motion.img
                 key={selectedImage}
                 src={product.images[selectedImage] || product.images[0]}
@@ -142,6 +146,15 @@ export default function ProductDetail() {
                 initial="initial"
                 animate="animate"
               />
+              
+              {/* Avatar Preview Toggle */}
+              <Button
+                onClick={() => setShowAvatarPreview(!showAvatarPreview)}
+                className="absolute top-4 right-4 bg-white/90 text-abuja-brown hover:bg-white"
+              >
+                <Eye className="w-4 h-4 mr-2" />
+                {showAvatarPreview ? 'Product View' : 'Avatar Preview'}
+              </Button>
             </div>
             
             {product.images.length > 1 && (
@@ -164,6 +177,55 @@ export default function ProductDetail() {
                   </button>
                 ))}
               </div>
+            )}
+
+            {/* Avatar Customization Panel */}
+            {showAvatarPreview && (
+              <motion.div
+                className="mt-6 p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <h3 className="text-lg font-semibold mb-4 text-abuja-brown">Avatar Customization</h3>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Color Palette
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {colors.map((color) => (
+                        <button
+                          key={color}
+                          onClick={() => setSelectedColor(color)}
+                          className={`w-8 h-8 rounded-full border-2 transition-all ${
+                            selectedColor === color ? 'border-abuja-brown scale-110' : 'border-gray-300'
+                          }`}
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Style Options
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {['Traditional', 'Modern', 'Casual', 'Formal'].map((style) => (
+                        <Button
+                          key={style}
+                          variant="outline"
+                          size="sm"
+                          className="hover:bg-abuja-brown hover:text-white"
+                        >
+                          {style}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             )}
           </motion.div>
 
@@ -193,14 +255,23 @@ export default function ProductDetail() {
                     )}
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setIsWishlisted(!isWishlisted)}
-                  className={`${isWishlisted ? 'text-burgundy' : 'text-abuja-brown/60'} hover:text-burgundy`}
-                >
-                  <Heart className={`w-6 h-6 ${isWishlisted ? 'fill-current' : ''}`} />
-                </Button>
+                <div className="flex space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setIsWishlisted(!isWishlisted)}
+                    className={`${isWishlisted ? 'text-burgundy' : 'text-abuja-brown/60'} hover:text-burgundy`}
+                  >
+                    <Heart className={`w-6 h-6 ${isWishlisted ? 'fill-current' : ''}`} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-abuja-brown/60 hover:text-abuja-brown"
+                  >
+                    <Share2 className="w-6 h-6" />
+                  </Button>
+                </div>
               </div>
               
               <p className="text-2xl lg:text-3xl font-bold text-gold mb-4">
@@ -213,6 +284,25 @@ export default function ProductDetail() {
             </div>
 
             <Separator />
+
+            {/* Avatar Styling Section */}
+            <div className="bg-gradient-to-r from-gold/10 to-abuja-brown/10 p-6 rounded-2xl">
+              <div className="flex items-center space-x-3 mb-4">
+                <Palette className="w-6 h-6 text-abuja-brown" />
+                <h3 className="text-lg font-semibold text-abuja-brown">Style Your Avatar</h3>
+              </div>
+              <p className="text-abuja-brown/80 mb-4">
+                Customize this design on your avatar and see how it looks before ordering. 
+                Mix and match colors, styles, and accessories to create your perfect look.
+              </p>
+              <Button
+                onClick={() => setShowAvatarPreview(true)}
+                className="bg-abuja-brown text-cream hover:bg-abuja-dark"
+              >
+                <Palette className="w-4 h-4 mr-2" />
+                Open Avatar Styler
+              </Button>
+            </div>
 
             {/* Size Selection */}
             {sizes.length > 0 && (
@@ -284,12 +374,21 @@ export default function ProductDetail() {
                 }
               </Button>
               
-              <Button
-                variant="outline"
-                className="w-full border-2 border-abuja-brown text-abuja-brown py-4 rounded-2xl text-lg font-semibold hover:bg-abuja-brown hover:text-cream transition-all duration-300"
-              >
-                Buy Now
-              </Button>
+              <div className="grid grid-cols-2 gap-3">
+                <Button
+                  variant="outline"
+                  className="border-2 border-abuja-brown text-abuja-brown py-3 rounded-2xl font-semibold hover:bg-abuja-brown hover:text-cream transition-all duration-300"
+                >
+                  <Palette className="w-4 h-4 mr-2" />
+                  Style Avatar
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-2 border-gold text-gold py-3 rounded-2xl font-semibold hover:bg-gold hover:text-abuja-brown transition-all duration-300"
+                >
+                  Buy Now
+                </Button>
+              </div>
             </div>
 
             <Separator />
@@ -307,6 +406,10 @@ export default function ProductDetail() {
               <div className="flex items-center space-x-3 text-abuja-brown/80">
                 <Shield className="w-5 h-5" />
                 <span>Authentic African craftsmanship</span>
+              </div>
+              <div className="flex items-center space-x-3 text-abuja-brown/80">
+                <Palette className="w-5 h-5" />
+                <span>Avatar styling available</span>
               </div>
             </div>
           </motion.div>
@@ -336,13 +439,13 @@ export default function ProductDetail() {
               
               <div>
                 <h3 className="font-playfair text-xl font-semibold mb-4 text-abuja-brown">
-                  Sizing Guide
+                  Avatar Styling
                 </h3>
                 <ul className="space-y-2 text-abuja-brown/80">
-                  <li>• S: 34-36 inches</li>
-                  <li>• M: 38-40 inches</li>
-                  <li>• L: 42-44 inches</li>
-                  <li>• XL: 46-48 inches</li>
+                  <li>• 3D avatar preview available</li>
+                  <li>• Multiple color options</li>
+                  <li>• Style customization</li>
+                  <li>• Virtual try-on experience</li>
                 </ul>
               </div>
               

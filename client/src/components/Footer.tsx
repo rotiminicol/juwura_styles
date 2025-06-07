@@ -36,6 +36,18 @@ export default function Footer() {
   return (
     <footer className="bg-abuja-brown text-cream py-16">
       <div className="container mx-auto max-w-7xl px-4">
+        {/* Style Your Avatar Banner */}
+        <div className="border-t-4 border-gold mb-12 pt-8">
+          <div className="text-center">
+            <h3 className="text-3xl font-bold font-playfair text-gold mb-2">
+              Style Your Avatar
+            </h3>
+            <p className="text-cream/90 text-lg">
+              Create • Customize • Express Your Unique African Style
+            </p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand Section */}
           <div>

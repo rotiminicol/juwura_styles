@@ -84,13 +84,14 @@ export class MemStorage implements IStorage {
   private seedData() {
     // Seed categories
     const categoriesData = [
-      { name: "Adire Bags", slug: "adire-bags", description: "Handcrafted traditional bags with authentic Adire patterns", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62" },
-      { name: "Gele", slug: "gele", description: "Premium African headwraps for special occasions", image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04" },
-      { name: "Men Adire", slug: "men-adire", description: "Sophisticated Adire wear for the modern gentleman", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" },
-      { name: "Woman Adire", slug: "woman-adire", description: "Stunning Adire dresses that celebrate African heritage", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b" },
-      { name: "Beads", slug: "beads", description: "Traditional African beads and jewelry", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338" },
-      { name: "Footwear", slug: "footwear", description: "Authentic African footwear and sandals", image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43" },
-      { name: "Caps", slug: "caps", description: "Traditional African caps and headwear", image: "https://images.unsplash.com/photo-1521369909029-2afed882baee" }
+      { name: "Traditional Wear", slug: "traditional-wear", description: "Authentic African traditional clothing", image: "/src/assets/wed.png" },
+      { name: "Modern African", slug: "modern-african", description: "Contemporary African-inspired fashion", image: "/src/assets/wed2.png" },
+      { name: "Accessories", slug: "accessories", description: "Traditional African accessories and jewelry", image: "/src/assets/wed3.png" },
+      { name: "Headwraps", slug: "headwraps", description: "Premium African headwraps and Gele", image: "/src/assets/wed4.png" },
+      { name: "Ceremonial", slug: "ceremonial", description: "Special occasion and ceremonial wear", image: "/src/assets/wed5.png" },
+      { name: "Footwear", slug: "footwear", description: "Authentic African footwear and sandals", image: "/src/assets/wed6.png" },
+      { name: "Bags", slug: "bags", description: "Handcrafted African bags and purses", image: "/src/assets/wed7.png" },
+      { name: "Jewelry", slug: "jewelry", description: "Traditional African beads and jewelry", image: "/src/assets/wed8.png" }
     ];
 
     categoriesData.forEach(cat => {
@@ -98,78 +99,65 @@ export class MemStorage implements IStorage {
       this.categories.set(category.id, category);
     });
 
-    // Seed products
-    const productsData = [
-      {
-        name: "Premium Adire Handbag",
-        description: "Handwoven traditional bag with authentic Yoruba patterns. This exquisite piece combines traditional craftsmanship with modern functionality.",
-        price: "45000.00",
-        categoryId: 1,
-        images: ["https://images.unsplash.com/photo-1553062407-98eeb64c6a62", "https://images.unsplash.com/photo-1594736797933-d0701ba2fe65"],
-        stock: 15,
-        featured: true,
-        topSeller: true
-      },
-      {
-        name: "Royal Gele Headwrap",
-        description: "Luxurious silk headwrap perfect for special occasions. Made from premium materials with authentic African patterns.",
-        price: "25000.00",
-        categoryId: 2,
-        images: ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04", "https://images.unsplash.com/photo-1578662996442-48f60103fc96"],
-        stock: 20,
-        featured: true,
-        topSeller: false
-      },
-      {
-        name: "Classic Agbada Set",
-        description: "Traditional three-piece Agbada with intricate embroidery. Perfect for cultural celebrations and formal events.",
-        price: "85000.00",
-        categoryId: 3,
-        images: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d", "https://images.unsplash.com/photo-1578662996442-48f60103fc96"],
-        stock: 8,
-        featured: true,
-        topSeller: true
-      },
-      {
-        name: "Designer Ankara Dress",
-        description: "Contemporary cut Ankara dress with traditional patterns. Elegant and comfortable for any occasion.",
-        price: "55000.00",
-        categoryId: 4,
-        images: ["https://images.unsplash.com/photo-1469334031218-e382a71b716b", "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b"],
-        stock: 12,
-        featured: true,
-        topSeller: false
-      },
-      {
-        name: "Kente Clutch Bag",
-        description: "Compact clutch bag with traditional kente patterns. Perfect accessory for evening events.",
-        price: "35000.00",
-        categoryId: 1,
-        images: ["https://images.unsplash.com/photo-1594736797933-d0701ba2fe65"],
-        stock: 25,
-        featured: false,
-        topSeller: false
-      },
-      {
-        name: "Aso Oke Gele",
-        description: "Traditional Aso Oke fabric headwrap with metallic threads. A symbol of elegance and tradition.",
-        price: "35000.00",
-        categoryId: 2,
-        images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96"],
-        stock: 18,
-        featured: false,
-        topSeller: false
-      }
+    // Generate comprehensive product data
+    const productNames = [
+      "Royal Ankara Dress", "Traditional Agbada Set", "Modern Dashiki Shirt",
+      "Elegant Kente Wrap", "Ceremonial Gele Headwrap", "Handwoven Adire Tunic",
+      "Contemporary African Blazer", "Traditional Boubou Robe", "Stylish Kaftan Dress",
+      "Authentic Mud Cloth Jacket", "Vibrant Wax Print Skirt", "Classic Aso Oke Set",
+      "Designer African Jumpsuit", "Traditional Wedding Attire", "Modern African Suit",
+      "Elegant Evening Gown", "Casual African Print Top", "Formal Ceremony Outfit",
+      "Trendy African Accessories", "Handcrafted Jewelry Set", "Traditional Footwear",
+      "Modern African Bag", "Ceremonial Crown", "Stylish Head Piece",
+      "Contemporary African Coat", "Traditional Dance Costume", "Modern Fusion Wear",
+      "Elegant African Scarf", "Designer Handbag", "Traditional Sandals",
+      "Ankara Print Blazer", "Kente Stole", "Adire Wrap Dress",
+      "Dashiki Tunic", "Boubou Caftan", "Aso Ebi Set",
+      "African Print Palazzo", "Traditional Wrapper", "Modern Agbada",
+      "Elegant Buba", "Stylish Iro", "Contemporary Gele",
+      "African Print Kimono", "Traditional Fila", "Modern Sokoto",
+      "Elegant Buba and Wrapper", "Stylish Agbada Set", "Contemporary Dashiki",
+      "African Print Maxi", "Traditional Headtie", "Modern Buba",
+      "Elegant Wrapper Set", "Stylish Kaftan", "Contemporary Boubou",
+      "African Print Shirt", "Traditional Cap", "Modern Wrapper",
+      "Elegant Dashiki", "Stylish Agbada", "Contemporary Buba",
+      "African Print Dress", "Traditional Gown", "Modern Tunic"
     ];
 
-    productsData.forEach(prod => {
-      const product: Product = { 
-        id: this.currentProductId++, 
-        ...prod,
+    const styles = [
+      "Ankara", "Kente", "Adire", "Dashiki", "Agbada", "Boubou", 
+      "Kaftan", "Gele", "Aso Oke", "Mud Cloth", "Wax Print", "Batik"
+    ];
+
+    const baseImages = [
+      "/src/assets/wed.png", "/src/assets/wed2.png", "/src/assets/wed3.png",
+      "/src/assets/wed4.png", "/src/assets/wed5.png", "/src/assets/wed6.png",
+      "/src/assets/wed7.png", "/src/assets/wed8.png", "/src/assets/wed9.png"
+    ];
+
+    // Generate 60 products
+    for (let i = 0; i < 60; i++) {
+      const categoryId = Math.floor(Math.random() * categoriesData.length) + 1;
+      const style = styles[Math.floor(Math.random() * styles.length)];
+      const baseName = productNames[i % productNames.length];
+      const price = (Math.floor(Math.random() * 200) + 30).toFixed(2);
+      const image = baseImages[Math.floor(Math.random() * baseImages.length)];
+      
+      const product: Product = {
+        id: this.currentProductId++,
+        name: `${baseName} - ${style}`,
+        description: `Authentic ${style} design featuring traditional patterns and modern comfort. Perfect for cultural celebrations and contemporary styling. Made with premium materials and expert craftsmanship.`,
+        price: price,
+        categoryId: categoryId,
+        images: [image, baseImages[(i + 1) % baseImages.length], baseImages[(i + 2) % baseImages.length]],
+        stock: Math.floor(Math.random() * 50) + 5,
+        featured: Math.random() > 0.7,
+        topSeller: Math.random() > 0.8,
         createdAt: new Date()
       };
+      
       this.products.set(product.id, product);
-    });
+    }
   }
 
   // Users
