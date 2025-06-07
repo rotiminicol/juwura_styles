@@ -53,6 +53,11 @@ export interface IStorage {
   createOrder(order: InsertOrder): Promise<Order>;
   getOrderItems(orderId: number): Promise<(OrderItem & { product: Product })[]>;
   createOrderItem(orderItem: InsertOrderItem): Promise<OrderItem>;
+  
+  // Wishlist
+  getWishlistItems(userId: number): Promise<(WishlistItem & { product: Product })[]>;
+  addToWishlist(wishlistItem: InsertWishlistItem): Promise<WishlistItem>;
+  removeFromWishlist(id: number): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -62,6 +67,7 @@ export class MemStorage implements IStorage {
   private cartItems: Map<number, CartItem> = new Map();
   private orders: Map<number, Order> = new Map();
   private orderItems: Map<number, OrderItem> = new Map();
+  private wishlistItems: Map<number, WishlistItem> = new Map();
   
   private currentUserId = 1;
   private currentCategoryId = 1;
@@ -69,6 +75,7 @@ export class MemStorage implements IStorage {
   private currentCartItemId = 1;
   private currentOrderId = 1;
   private currentOrderItemId = 1;
+  private currentWishlistItemId = 1;
 
   constructor() {
     this.seedData();
@@ -79,8 +86,11 @@ export class MemStorage implements IStorage {
     const categoriesData = [
       { name: "Adire Bags", slug: "adire-bags", description: "Handcrafted traditional bags with authentic Adire patterns", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62" },
       { name: "Gele", slug: "gele", description: "Premium African headwraps for special occasions", image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04" },
-      { name: "Men's Native", slug: "mens-native", description: "Sophisticated traditional wear for the modern gentleman", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" },
-      { name: "Women's Native", slug: "womens-native", description: "Stunning traditional dresses that celebrate African heritage", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b" }
+      { name: "Men Adire", slug: "men-adire", description: "Sophisticated Adire wear for the modern gentleman", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" },
+      { name: "Woman Adire", slug: "woman-adire", description: "Stunning Adire dresses that celebrate African heritage", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b" },
+      { name: "Beads", slug: "beads", description: "Traditional African beads and jewelry", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338" },
+      { name: "Footwear", slug: "footwear", description: "Authentic African footwear and sandals", image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43" },
+      { name: "Caps", slug: "caps", description: "Traditional African caps and headwear", image: "https://images.unsplash.com/photo-1521369909029-2afed882baee" }
     ];
 
     categoriesData.forEach(cat => {
@@ -97,7 +107,8 @@ export class MemStorage implements IStorage {
         categoryId: 1,
         images: ["https://images.unsplash.com/photo-1553062407-98eeb64c6a62", "https://images.unsplash.com/photo-1594736797933-d0701ba2fe65"],
         stock: 15,
-        featured: true
+        featured: true,
+        topSeller: true
       },
       {
         name: "Royal Gele Headwrap",
@@ -106,7 +117,8 @@ export class MemStorage implements IStorage {
         categoryId: 2,
         images: ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04", "https://images.unsplash.com/photo-1578662996442-48f60103fc96"],
         stock: 20,
-        featured: true
+        featured: true,
+        topSeller: false
       },
       {
         name: "Classic Agbada Set",
@@ -115,7 +127,8 @@ export class MemStorage implements IStorage {
         categoryId: 3,
         images: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d", "https://images.unsplash.com/photo-1578662996442-48f60103fc96"],
         stock: 8,
-        featured: true
+        featured: true,
+        topSeller: true
       },
       {
         name: "Designer Ankara Dress",
