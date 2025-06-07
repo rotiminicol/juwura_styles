@@ -1,0 +1,320 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(44, 100%, 97%);
+  --foreground: hsl(23, 49%, 25%);
+  --muted: hsl(44, 20%, 90%);
+  --muted-foreground: hsl(23, 20%, 45%);
+  --popover: hsl(44, 100%, 97%);
+  --popover-foreground: hsl(23, 49%, 25%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(23, 49%, 25%);
+  --border: hsl(23, 20%, 85%);
+  --input: hsl(23, 20%, 85%);
+  --primary: hsl(23, 49%, 25%);
+  --primary-foreground: hsl(44, 100%, 97%);
+  --secondary: hsl(44, 20%, 90%);
+  --secondary-foreground: hsl(23, 49%, 25%);
+  --accent: hsl(47, 95%, 53%);
+  --accent-foreground: hsl(23, 49%, 25%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(23, 49%, 25%);
+  --radius: 0.75rem;
+  
+  /* Custom JUWURA colors */
+  --cream: hsl(44, 100%, 97%);
+  --abuja-brown: hsl(23, 49%, 25%);
+  --abuja-dark: hsl(23, 60%, 15%);
+  --gold: hsl(47, 95%, 53%);
+  --burgundy: hsl(0, 100%, 27%);
+}
+
+.dark {
+  --background: hsl(23, 20%, 8%);
+  --foreground: hsl(44, 100%, 97%);
+  --muted: hsl(23, 20%, 15%);
+  --muted-foreground: hsl(44, 20%, 65%);
+  --popover: hsl(23, 20%, 8%);
+  --popover-foreground: hsl(44, 100%, 97%);
+  --card: hsl(23, 20%, 10%);
+  --card-foreground: hsl(44, 100%, 97%);
+  --border: hsl(23, 20%, 20%);
+  --input: hsl(23, 20%, 20%);
+  --primary: hsl(44, 100%, 97%);
+  --primary-foreground: hsl(23, 49%, 25%);
+  --secondary: hsl(23, 20%, 15%);
+  --secondary-foreground: hsl(44, 100%, 97%);
+  --accent: hsl(47, 95%, 53%);
+  --accent-foreground: hsl(23, 49%, 25%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(44, 100%, 97%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .font-playfair {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  
+  .bg-cream {
+    background-color: var(--cream);
+  }
+  
+  .bg-abuja-brown {
+    background-color: var(--abuja-brown);
+  }
+  
+  .bg-abuja-dark {
+    background-color: var(--abuja-dark);
+  }
+  
+  .bg-gold {
+    background-color: var(--gold);
+  }
+  
+  .bg-burgundy {
+    background-color: var(--burgundy);
+  }
+  
+  .text-cream {
+    color: var(--cream);
+  }
+  
+  .text-abuja-brown {
+    color: var(--abuja-brown);
+  }
+  
+  .text-abuja-dark {
+    color: var(--abuja-dark);
+  }
+  
+  .text-gold {
+    color: var(--gold);
+  }
+  
+  .text-burgundy {
+    color: var(--burgundy);
+  }
+  
+  .border-cream {
+    border-color: var(--cream);
+  }
+  
+  .border-abuja-brown {
+    border-color: var(--abuja-brown);
+  }
+  
+  .border-gold {
+    border-color: var(--gold);
+  }
+  
+  .hover\:bg-abuja-brown:hover {
+    background-color: var(--abuja-brown);
+  }
+  
+  .hover\:bg-abuja-dark:hover {
+    background-color: var(--abuja-dark);
+  }
+  
+  .hover\:text-gold:hover {
+    color: var(--gold);
+  }
+  
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    background: hsla(44, 100%, 97%, 0.9);
+  }
+  
+  .parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  @media (max-width: 768px) {
+    .parallax-bg {
+      background-attachment: scroll;
+    }
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-20px); 
+  }
+}
+
+@keyframes slideUp {
+  from { 
+    transform: translateY(50px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+  }
+  to { 
+    opacity: 1; 
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.animate-slide-out-right {
+  animation: slideOutRight 0.3s ease-out;
+}
+
+.product-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-press {
+  transition: all 0.15s ease;
+}
+
+.btn-press:active {
+  transform: scale(0.95);
+}
+
+/* Custom scrollbar */
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--abuja-brown) var(--cream);
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: var(--abuja-brown);
+  border-radius: 3px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--abuja-dark);
+}
+
+/* Logo animation */
+.logo-bounce {
+  animation: logo-bounce 2s ease-in-out infinite;
+}
+
+@keyframes logo-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Loading spinner */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Image loading placeholder */
+.image-loading {
+  background: linear-gradient(90deg, var(--muted) 25%, transparent 50%, var(--muted) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
