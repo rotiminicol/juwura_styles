@@ -5,6 +5,7 @@ import {
   cartItems, 
   orders, 
   orderItems,
+  wishlist,
   type User, 
   type InsertUser,
   type Category,
@@ -16,7 +17,9 @@ import {
   type Order,
   type InsertOrder,
   type OrderItem,
-  type InsertOrderItem
+  type InsertOrderItem,
+  type WishlistItem,
+  type InsertWishlistItem
 } from "@shared/schema";
 
 export interface IStorage {
@@ -32,8 +35,9 @@ export interface IStorage {
   createCategory(category: InsertCategory): Promise<Category>;
   
   // Products
-  getProducts(categoryId?: number, featured?: boolean): Promise<Product[]>;
+  getProducts(categoryId?: number, featured?: boolean, topSeller?: boolean): Promise<Product[]>;
   getProduct(id: number): Promise<Product | undefined>;
+  searchProducts(query: string): Promise<Product[]>;
   createProduct(product: InsertProduct): Promise<Product>;
   
   // Cart

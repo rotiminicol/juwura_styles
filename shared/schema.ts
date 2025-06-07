@@ -28,6 +28,7 @@ export const products = pgTable("products", {
   images: text("images").array().notNull(),
   stock: integer("stock").notNull().default(0),
   featured: boolean("featured").default(false),
+  topSeller: boolean("top_seller").default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -58,6 +59,13 @@ export const orderItems = pgTable("order_items", {
   size: text("size"),
 });
 
+export const wishlist = pgTable("wishlist", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  productId: integer("product_id").references(() => products.id).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -74,6 +82,7 @@ export const insertProductSchema = createInsertSchema(products).omit({
 }).extend({
   stock: z.number().default(0),
   featured: z.boolean().nullable().default(false),
+  topSeller: z.boolean().nullable().default(false),
 });
 
 export const insertCartItemSchema = createInsertSchema(cartItems).omit({
@@ -90,6 +99,11 @@ export const insertOrderItemSchema = createInsertSchema(orderItems).omit({
   id: true,
 });
 
+export const insertWishlistSchema = createInsertSchema(wishlist).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -103,3 +117,5 @@ export type Order = typeof orders.$inferSelect;
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
 export type OrderItem = typeof orderItems.$inferSelect;
 export type InsertOrderItem = z.infer<typeof insertOrderItemSchema>;
+export type WishlistItem = typeof wishlist.$inferSelect;
+export type InsertWishlistItem = z.infer<typeof insertWishlistSchema>;
