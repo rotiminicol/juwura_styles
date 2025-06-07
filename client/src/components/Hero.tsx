@@ -2,24 +2,40 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Star, Gem } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { fadeInUp, fadeIn, floatAnimation } from '@/lib/animations';
+import heroImage from '@/assets/adire2.png';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream">
-      {/* Background Image */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream aspect-[16/9]">
+      {/* 3D Background */}
       <div className="absolute inset-0 z-0">
+        {/* Gradient overlay with depth */}
         <div className="absolute inset-0 bg-gradient-to-br from-cream/95 via-cream/90 to-abuja-brown/20 z-10" />
-        <img
-          src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080"
-          alt="Beautiful African models in traditional attire"
-          className="w-full h-full object-cover opacity-60"
-        />
+        
+        {/* Main image with 3D transform */}
+        <div className="absolute inset-0 transform-gpu perspective-1000">
+          <div className="absolute inset-0 rotate-3d-x-5 rotate-3d-y-2 transform-gpu transition-transform duration-1000 ease-in-out hover:rotate-3d-x-8 hover:rotate-3d-y-3">
+            <img
+              src={heroImage}
+              alt="Beautiful African models in traditional attire"
+              className="w-full h-full object-cover opacity-60"
+            />
+          </div>
+        </div>
+
+        {/* 3D floating elements */}
+        <div className="absolute inset-0">
+          <div className="absolute left-1/4 -top-10 w-64 h-64 bg-gold/20 rounded-full blur-3xl transform-gpu translate-z-10" />
+          <div className="absolute right-1/4 -bottom-10 w-48 h-48 bg-abuja-brown/20 rounded-full blur-3xl transform-gpu translate-z-20" />
+          <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-burgundy/20 rounded-full blur-2xl transform-gpu translate-z-15" />
+          <div className="absolute bottom-1/4 left-1/4 w-40 h-40 bg-gold/30 rounded-full blur-xl transform-gpu translate-z-5" />
+        </div>
       </div>
 
-      {/* Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
+      {/* 3D Floating Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-30 transform-gpu perspective-1000">
         <motion.div
-          className="absolute top-20 left-10 w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center"
+          className="absolute top-20 left-10 w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center transform-gpu translate-z-30"
           variants={floatAnimation}
           initial="initial"
           animate="animate"
@@ -27,7 +43,15 @@ export default function Hero() {
           <Star className="w-8 h-8 text-gold" />
         </motion.div>
         <motion.div
-          className="absolute bottom-32 right-20 w-16 h-16 bg-burgundy/20 rounded-full flex items-center justify-center"
+          className="absolute bottom-20 right-10 w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center transform-gpu translate-z-30"
+          variants={floatAnimation}
+          initial="initial"
+          animate="animate"
+        >
+          <Gem className="w-8 h-8 text-gold" />
+        </motion.div>
+        <motion.div
+          className="absolute bottom-32 right-20 w-16 h-16 bg-burgundy/20 rounded-full flex items-center justify-center transform-gpu translate-z-35"
           variants={floatAnimation}
           initial="initial"
           animate="animate"
@@ -36,7 +60,7 @@ export default function Hero() {
           <Gem className="w-6 h-6 text-burgundy" />
         </motion.div>
         <motion.div
-          className="absolute top-1/2 left-1/4 w-12 h-12 bg-abuja-brown/20 rounded-full"
+          className="absolute top-1/2 left-1/4 w-12 h-12 bg-abuja-brown/20 rounded-full transform-gpu translate-z-40"
           variants={floatAnimation}
           initial="initial"
           animate="animate"
@@ -44,8 +68,10 @@ export default function Hero() {
         />
       </div>
 
-      {/* Hero Content */}
-      <div className="relative z-30 text-center px-4 max-w-6xl mx-auto">
+
+
+      {/* Hero Content with 3D effect */}
+      <div className="relative z-30 text-center px-4 max-w-6xl mx-auto transform-gpu translate-z-50">
         <motion.h1
           className="font-playfair text-5xl md:text-6xl lg:text-7xl font-bold mb-6"
           variants={fadeInUp}
