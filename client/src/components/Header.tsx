@@ -66,8 +66,8 @@ export default function Header() {
           <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link key={item.href} href={item.href}>
-                <motion.a
-                  className={`text-sm font-medium transition-colors duration-300 ${
+                <motion.span
+                  className={`text-sm font-medium transition-colors duration-300 cursor-pointer ${
                     location === item.href
                       ? 'text-gold'
                       : 'text-abuja-brown hover:text-gold'
@@ -75,7 +75,7 @@ export default function Header() {
                   whileHover={{ y: -2 }}
                 >
                   {item.name}
-                </a>
+                </motion.span>
               </Link>
             ))}
           </nav>

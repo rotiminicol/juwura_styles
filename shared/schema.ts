@@ -71,6 +71,9 @@ export const insertCategorySchema = createInsertSchema(categories).omit({
 export const insertProductSchema = createInsertSchema(products).omit({
   id: true,
   createdAt: true,
+}).extend({
+  stock: z.number().default(0),
+  featured: z.boolean().nullable().default(false),
 });
 
 export const insertCartItemSchema = createInsertSchema(cartItems).omit({

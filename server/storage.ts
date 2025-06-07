@@ -187,7 +187,10 @@ export class MemStorage implements IStorage {
   async createCategory(insertCategory: InsertCategory): Promise<Category> {
     const category: Category = {
       id: this.currentCategoryId++,
-      ...insertCategory
+      name: insertCategory.name,
+      slug: insertCategory.slug,
+      description: insertCategory.description || null,
+      image: insertCategory.image || null
     };
     this.categories.set(category.id, category);
     return category;
@@ -215,7 +218,13 @@ export class MemStorage implements IStorage {
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
     const product: Product = {
       id: this.currentProductId++,
-      ...insertProduct,
+      name: insertProduct.name,
+      description: insertProduct.description,
+      price: insertProduct.price,
+      categoryId: insertProduct.categoryId,
+      images: insertProduct.images,
+      stock: insertProduct.stock || 0,
+      featured: insertProduct.featured || false,
       createdAt: new Date()
     };
     this.products.set(product.id, product);
@@ -241,13 +250,16 @@ export class MemStorage implements IStorage {
       );
 
     if (existingItem) {
-      existingItem.quantity += insertCartItem.quantity;
+      existingItem.quantity += insertCartItem.quantity || 1;
       return existingItem;
     }
 
     const cartItem: CartItem = {
       id: this.currentCartItemId++,
-      ...insertCartItem,
+      userId: insertCartItem.userId,
+      productId: insertCartItem.productId,
+      quantity: insertCartItem.quantity || 1,
+      size: insertCartItem.size || null,
       createdAt: new Date()
     };
     this.cartItems.set(cartItem.id, cartItem);
@@ -286,7 +298,10 @@ export class MemStorage implements IStorage {
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
     const order: Order = {
       id: this.currentOrderId++,
-      ...insertOrder,
+      userId: insertOrder.userId,
+      total: insertOrder.total,
+      status: insertOrder.status || "pending",
+      shippingAddress: insertOrder.shippingAddress,
       createdAt: new Date()
     };
     this.orders.set(order.id, order);
@@ -304,7 +319,11 @@ export class MemStorage implements IStorage {
   async createOrderItem(insertOrderItem: InsertOrderItem): Promise<OrderItem> {
     const orderItem: OrderItem = {
       id: this.currentOrderItemId++,
-      ...insertOrderItem
+      orderId: insertOrderItem.orderId,
+      productId: insertOrderItem.productId,
+      quantity: insertOrderItem.quantity,
+      price: insertOrderItem.price,
+      size: insertOrderItem.size || null
     };
     this.orderItems.set(orderItem.id, orderItem);
     return orderItem;
